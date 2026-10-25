@@ -1,0 +1,27 @@
+{
+  "site": "示例工厂 · 教学仿真场景",
+  "note": "全部为教学演示数据，不是任何真实企业的实测值。方案书里必须写明这一点。",
+  "system": {
+    "compressors": 3,
+    "rated_power_kw": 132,
+    "supply_pressure_bar": 7.5,
+    "supply_flow_m3min": 8.0,
+    "specific_power_kwh_m3": 0.12,
+    "hours_per_year": 6000,
+    "price_yuan_kwh": 0.65,
+    "tank_volume_m3": 10.0
+  },
+  "zones": [
+    { "name": "1号车间", "header_flow": 18.5, "branches": [6.1, 5.4, 4.8] },
+    { "name": "2号车间", "header_flow": 15.2, "branches": [5.2, 5.0, 4.6] },
+    { "name": "3号车间", "header_flow": 16.8, "branches": [4.0, 3.6, 3.2] }
+  ],
+  "leaks": [
+    { "location": "3号车间-东侧法兰", "flow": 0.42, "cost": 800 },
+    { "location": "3号车间-快换接头×6", "flow": 0.35, "cost": 600 },
+    { "location": "2号车间-气动三联件排水阀", "flow": 0.28, "cost": 300 },
+    { "location": "1号车间-软管接头×4", "flow": 0.18, "cost": 400 },
+    { "location": "主管道-焊口砂眼", "flow": 0.55, "cost": 3200 },
+    { "location": "2号车间-备用支管盲板", "flow": 0.12, "cost": 200 }
+  ]
+}

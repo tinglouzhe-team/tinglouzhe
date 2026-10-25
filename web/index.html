@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>听漏者 · 压缩空气管网泄漏诊断智能体</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <span class="logo">◉</span>
+    <div>
+      <h1>听漏者</h1>
+      <p>压缩空气管网泄漏定位与修复决策智能体</p>
+    </div>
+  </div>
+  <div class="status">
+    <span id="mode-pill" class="pill">连接中…</span>
+  </div>
+</header>
+
+<main class="grid">
+  <!-- 左：对话 -->
+  <section class="card chat">
+    <div class="card-head">
+      <h2>诊断台</h2>
+      <button id="btn-clear" class="ghost">清空</button>
+    </div>
+    <div id="messages" class="messages">
+      <div class="msg bot">
+        <div class="bubble">
+          <b>夜班模式已开启。</b><br>
+          当前示例：3 台空压机、1 个储气罐、3 个车间。<br><br>
+          可以直接问我：<br>
+          · V=10，7 降到 6，5 分钟，总产气 8<br>
+          · 哪个车间漏得最厉害？<br>
+          · 先修哪几个？<br>
+          · 我把总阀关小点行不行？
+        </div>
+      </div>
+    </div>
+    <div class="quick">
+      <button data-q="V=10，7 降到 6，5 分钟，总产气 8">保压测算</button>
+      <button data-q="哪个车间漏得最厉害？">分区定位</button>
+      <button data-q="先修哪几个？">修复排序</button>
+      <button data-q="我把总阀关小点行不行？">反常识提问</button>
+    </div>
+    <form id="chat-form" class="composer">
+      <input id="chat-input" placeholder="说一句工况，或问一个问题…" autocomplete="off">
+      <button type="submit">发送</button>
+    </form>
+  </section>
+
+  <!-- 右：面板 -->
+  <section class="panels">
+    <div class="card">
+      <div class="card-head">
+        <h2>① 保压试验测算</h2>
+        <button id="btn-demo" class="ghost">填入示例</button>
+      </div>
+      <form id="decay-form" class="form">
+        <label>容积 V (m³)<input name="v_m3" type="number" step="0.1" value="10" required></label>
+        <label>起始压力 P₁ (bar)<input name="p1_bar" type="number" step="0.1" value="7" required></label>
+        <label>终止压力 P₂ (bar)<input name="p2_bar" type="number" step="0.1" value="6" required></label>
+        <label>压降时间 t (min)<input name="t_min" type="number" step="0.1" value="5" required></label>
+        <label>总产气量 (m³/min)<input name="supply_flow" type="number" step="0.1" value="8"></label>
+        <label>比功率 (kWh/m³)<input name="specific_power" type="number" step="0.01" value="0.12"></label>
+        <label>年运行 (h)<input name="hours" type="number" step="100" value="6000"></label>
+        <label>电价 (元/kWh)<input name="price" type="number" step="0.01" value="0.65"></label>
+        <button type="submit" class="primary">开始测算</button>
+      </form>
+      <div id="decay-result" class="result empty">填参数后点“开始测算”</div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>② 分区流量平衡</h2></div>
+      <div id="zone-table" class="table-wrap"></div>
+      <div id="zone-note" class="note"></div>
+    </div>
+
+    <div class="card wide">
+      <div class="card-head"><h2>③ 管网与漏点优先级</h2></div>
+      <svg id="network" viewBox="0 0 760 250" role="img" aria-label="示例压缩空气管网"></svg>
+      <div id="leak-list" class="leaks"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  数据为教学仿真场景 · 方法参照 ISO 11011 停机保压法 · 公式见 engine.py
+  <span id="instance" class="inst">正在确认当前实例…</span>
+</footer>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

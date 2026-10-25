@@ -1,0 +1,67 @@
+听漏者 · 公网永久版 —— 拿到链接只需要 6 步（这一页是压缩包内的速查卡）
+================================================================
+
+【第 1 步】先在自家电脑上确认它能跑
+  1. 电脑装 Python 3.10 以上（安装时勾选 Add Python to PATH）
+  2. 双击 run.bat
+  3. 浏览器打开 http://127.0.0.1:8000
+  看到左边聊天框、右边四张卡片，右上角写"本地规则模式"，就说明代码没问题。
+  ★ 跑通之前不要去部署，否则排错会变成两头找。
+
+【第 2 步】把这些文件传到一个 GitHub 仓库（网页拖拽就能传，不用命令行）
+  要传的文件/文件夹（共 10 个）：
+      app.py
+      agent.py
+      engine.py
+      requirements.txt
+      data/            （里面是 network.json）
+      web/             （里面是 index.html、style.css、app.js）
+      tests/           （可选，传不传都行）
+      doctor.py        （可选）
+      run.bat          （可选，云端用不到，本地用）
+  ★ 不要传整个压缩包！平台不会自动解压，只认解压后的文件。
+
+【第 3 步】注册 Render（https://render.com），用 GitHub 账号登录
+  免费、不需要信用卡。
+
+【第 4 步】Render 里点 + New → Web Service → 选中刚才的仓库 → Connect
+
+【第 5 步】照下面这张表填，别改别的：
+      Name            听漏者拼音，比如 tinglouzhe
+      Branch          main
+      Language        Python 3
+      Build Command   pip install -r requirements.txt
+      Start Command   python app.py
+      Compute         Free（0.1 CPU / 512 MB）
+
+【第 6 步】点 Deploy，等 3—10 分钟
+  日志最后出现 "==> Your service is live 🎉" 就成了。
+  链接形如：https://tinglouzhe.onrender.com
+
+【验收】
+  用手机流量（关掉 WiFi）打开链接，依次输入这 6 句，对得上就是成功：
+      1) V=10，7 降到 6，5 分钟，总产气 8      → 泄漏 1.97 m³/min，年损失约 5.5 万，判"差"
+      2) 哪个车间漏得最厉害？                  → 3号车间，差额 6.0
+      3) 先修哪几个？                          → 按回本天数排序的清单
+      4) 我把总阀关小点行不行？                → 拒绝，并解释关阀不治漏
+      5) 你随便编个容积给我算                  → 拒绝，"这个我不编"
+      6) 你好                                  → 列出四项能力
+
+【必须知道的 3 件事】
+  1. 免费版会"睡觉"：15 分钟没人访问就休眠，下一次打开要等约 1 分钟（页面会有加载提示）。
+     答辩/演示前 5 分钟先自己打开一次，把它叫醒。
+  2. 每月 750 小时免费时长，休眠不扣。只要不同时开好几个服务，够用。
+  3. 云端的文件是临时的：改数据要在 GitHub 上改 network.json，提交后会自动重新部署。
+
+【常见故障一句话】
+  部署后打开是 502 / 一直转圈 → 先看 Render 的 Logs 有没有红字；再确认 Start Command 是 python app.py
+  页面显示"服务未连接"        → 多半是服务还没醒，等 60 秒刷新
+  右上角还是"本地规则模式"    → 没配模型，正常；要配见教程第 9 章
+
+环境变量（配模型时才用，在 Render 服务页 Environment 里加，三个一起加）：
+  LLM_BASE_URL   接口地址（OpenAI 兼容，一般填到 /v1 或 /v4 为止）
+  LLM_API_KEY    你的 Key
+  LLM_MODEL      模型名
+  ★ Key 千万不要写进代码，也不要传进 GitHub。
+
+遇到任何报错：把 Render Logs 里的红色文字整段复制，贴给 AI 说"运行报这个错，帮我修好"。
